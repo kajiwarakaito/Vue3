@@ -29,6 +29,7 @@ App.vue
 
 ```ts
 mustache/src/App.vue
+
 <script setup lang="ts">
     import {ref} from "vue";
 
@@ -39,3 +40,9 @@ mustache/src/App.vue
     <h1>こんにちは！{{name}}さん！</h1>
 </template>
 ```
+*setup* → この文言によっていろいろと設定の手順を省いて記述できるようになる。  
+逆にsetupに入っている設定をデフォルトから変えたい場合は、  
+setupを抜いて記述しなければならない→　7章参照  
+
+{{name}}  
+マスタッシュ構文。スクリプトブロックで宣言し、テンプレート変数にした物を当てはめて表示する
