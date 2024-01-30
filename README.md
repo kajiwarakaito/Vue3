@@ -76,3 +76,32 @@ const name = ref(Name);
 ## 3.2 リアクティブシステム
 ### 3.2.1 ref()の働き
 
+<<<<<<< Updated upstream
+=======
+```ts
+reactive-system/src/App.vue
+
+<script setup lang="ts">
+    import {ref} from "vue";
+
+    const now = new Date();
+    const nowStr = now.toLocaleTimeString();
+    let timeStr = nowStr;
+    const timeStrRef = ref(nowStr);
+
+    function changeTime(): void{
+        const newTime = new Date();
+        const newTimeStr = newTime.toLocaleTimeString();
+        timeStr = newTimeStr;
+        timeStrRef.value = newTimeStr;
+        }
+        
+    setInterval(changeTime, 1000);
+</script>
+
+<template>
+    <p>現在時刻: {{ timeStr }}</p>
+    <p>現在時刻(ref): {{ timeStrRef }}</p>
+</template>
+```
+>>>>>>> Stashed changes
