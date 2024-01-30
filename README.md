@@ -76,8 +76,6 @@ const name = ref(Name);
 ## 3.2 リアクティブシステム
 ### 3.2.1 ref()の働き
 
-<<<<<<< Updated upstream
-=======
 ```ts
 reactive-system/src/App.vue
 
@@ -104,4 +102,3 @@ reactive-system/src/App.vue
     <p>現在時刻(ref): {{ timeStrRef }}</p>
 </template>
 ```
->>>>>>> Stashed changes
