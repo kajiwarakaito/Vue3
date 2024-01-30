@@ -86,6 +86,7 @@ reactive-system/src/App.vue
     const nowStr = now.toLocaleTimeString();
     let timeStr = nowStr;
     const timeStrRef = ref(nowStr);
+    ↑ 現在時刻とその文字列をテンプレート変数として用意
 
     function changeTime(): void{
         const newTime = new Date();
@@ -102,3 +103,4 @@ reactive-system/src/App.vue
     <p>現在時刻(ref): {{ timeStrRef }}</p>
 </template>
 ```
+
