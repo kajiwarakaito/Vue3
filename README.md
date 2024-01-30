@@ -28,15 +28,14 @@ App.vue
 
 <br>
 
-あいさつ  
----
+Hava bad day! Hey, Kajy!
 ```ts
 mustache/src/App.vue
 
 <script setup lang="ts">
     import {ref} from "vue";
 
-    const name = ref("田中太郎");
+    const name = ref("梶原海斗");
 </script>
 
 <template>
@@ -64,13 +63,13 @@ ref関数の()内に引数を渡すことで、その戻り値をマスタッシ
 つまり
 
 ```ts
-const name = ref("田中太郎");
+const name = ref("梶原海斗");
 ```
 によって変数:nameを宣言、同時にref関数の引数に"田中太郎"を入れる事によって、
-変数:nameにref関数の戻り値を代入する。(要するにnameに"田中太郎"を代入)  
+変数:nameにref関数の戻り値を代入する。(要するにnameに"梶原海斗"を代入)  
 
 ```ts
-const Name = "田中太郎";
+const Name = "梶原海斗";
 const name = ref(Name);
 ```
 一気にやらず一つ一つやることも当然できる
