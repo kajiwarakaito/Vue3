@@ -88,13 +88,16 @@ reactive-system/src/App.vue
     const timeStrRef = ref(nowStr);
     ↑ 現在時刻とその文字列をテンプレート変数として用意
 
+    新しい時刻に変更・更新するchangeTime関数
     function changeTime(): void{
         const newTime = new Date();
         const newTimeStr = newTime.toLocaleTimeString();
+        ↑ 現在の時刻とその文字列を取得
         timeStr = newTimeStr;
         timeStrRef.value = newTimeStr;
+        ↑ 現在の時刻文字列をそれぞれのテンプレート変数に代入
         }
-        
+    changeTime関数を1秒ごとに更新させる
     setInterval(changeTime, 1000);
 </script>
 
@@ -103,4 +106,5 @@ reactive-system/src/App.vue
     <p>現在時刻(ref): {{ timeStrRef }}</p>
 </template>
 ```
-
+上記のコードの内容の要約としては、  
+一文の前後に現在時刻を表示し、前に更新した瞬間の時刻を表示、後ろに更新し続ける現在時刻を表示する
