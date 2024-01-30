@@ -1,7 +1,6 @@
 # Vue3.Chapter3
 ## 「Vue3 フロントエンド開発の教科書」3章  
 ## 3.1 Vueのコンポーネントと基本構文
-### 3.1.2 単一コンポーネントファイルとは
 
 主にscript, template, styleの三つから構成されている。  
 この構成からなるファイルを単一コンポーネントファイルといい、  
@@ -107,10 +106,12 @@ reactive-system/src/App.vue
         const newTime = new Date();
         const newTimeStr = newTime.toLocaleTimeString();
         ↑ 現在の時刻とその文字列を取得
+
         timeStr = newTimeStr;
         timeStrRef.value = newTimeStr;
         ↑ 現在の時刻文字列をそれぞれのテンプレート変数に代入
         }
+
     changeTime関数を1秒ごとに更新させる
     setInterval(changeTime, 1000);
 </script>
