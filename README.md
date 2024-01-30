@@ -134,4 +134,42 @@ timeStrRef.value = newTimeStr;
 ```
 によって時刻が変化する  
 <br>
+
 リアクティブな状態を維持しないと更新されないので、変数timeStrRefに **.value** をつけ、timeStrRef.valueとすることで現在時刻を更新し続けることができる
+
+## 3.3 リアクティブデータ用意のバリエーション
+スクリプトブロック、外部からの入力によって与えられた変数をリアクティブデータとして扱いたい時等では算出プロパティという方法を使うのがいい
+```ts
+computed/src/App.vue
+
+<script setup lang="ts">
+  import {ref, computed, reactive} from "vue";
+
+  const radiusInit = Math.round(Math.random() * 10);
+  const PI = ref(3.14);
+  const radius = ref(radiusInit);
+
+  ↓ 算出プロパティを computed()関数を使ってテンプレート変数に
+  const area = computed(
+    (): number => {
+      return radius.value * radius.value * PI.value;
+      }
+    );
+
+  setInterval(
+    (): void => {
+      radius.value = Math.round(Math.random() * 10);
+      }, 1000
+  );
+</script>
+
+<template>
+  <p>半径{{ radius }}の円の面積を円周率{{ PI }}で計算すると、{{ area }}</p>
+</template>
+```
+算出プロパティ(Computed Propperties)を使うことにより、スクリプトブロックや外部からの入力によって与えられた変数をリアクティブデータとして取り扱うことが出来る。  
+ここでは計算式内の数値を1秒ごとにランダムに変化させ、計算を行うため使用している  
+
+
+
+reactive()関数：複数のデータを一つにまとめ上げ、まとめてリアクティブ化する変数
