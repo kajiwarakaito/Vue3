@@ -27,7 +27,8 @@ App.vue
 ```
 
 <br>
-あいさつ
+
+あいさつ  
 ---
 ```ts
 mustache/src/App.vue
