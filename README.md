@@ -26,7 +26,7 @@ App.vue
 </style>
 ```
 
-### 3.1.3 記述の基本
+<br>
 
 ```ts
 mustache/src/App.vue
@@ -74,8 +74,6 @@ const name = ref(Name);
 一気にやらず一つ一つやることも当然できる
 
 ## 3.2 リアクティブシステム
-### 3.2.1 ref()の働き
-
 ```ts
 reactive-system/src/App.vue
 
