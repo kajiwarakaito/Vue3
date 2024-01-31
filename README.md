@@ -39,5 +39,55 @@ v-bind:href="url"
 "let url = 'guide/introduction.html'"
 ```
 
+hrefとはちがいdisabledやreadonlyには属性値がない
+```ts
+<script setup lang="ts">
+  import {ref} from "vue";
+  const inSendButtonDisabled = ref(true);
+</script>
+
+<template>
+  <p><button type="button" v-bind:disabled="inSendButtonDisabled">送信</button></p>
+</template>
+```
+inSendButtonDisabledのtrue/falseのbooleanがtrueの場合はレンダリング結果に属性が付与される  
+<br>
+
+```ts
+<script setup lang="ts">
+  import {ref} from "vue";
+  const widthOrHeight = ref("height");
+  const widthOrHeightValue = ref(100);
+</script>
+
+<template>
+  <p>
+    <img alt="VueLogo" src="./assets/logo.svg" v-bind:[widthOrHeight]="widthOrHeightValue">
+  </p>
+</template>
+```
+のようにバインドする属性をテンプレート変数にすることができる
+レンダリング結果
+`<img alt="VueLogo" src="/src/assets/logo.svg" height="100">`  
+<br>
+
+まとめてバインド
+```ts
+<script setup lang="ts">
+  import {ref} from "vue";
+  const imgAttributes = ref({
+    src: "/images/logo.srg",
+    alt: "Vueのロゴ",
+    width: 75,
+    height: 75
+    });
+</script>
+
+<template>
+  <p><img v-bind="imgAttributes"></p>
+  <p><img v-bind="imgAttributes" title="ロゴです！"></p>
+  <p><img v-bind="imgAttributes" alt="ロゴです！"></p>
+</template>
+```
 
 ## 4.2 イベントのディレクティブ
