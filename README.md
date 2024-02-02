@@ -1,4 +1,4 @@
-## 「Vue3 フロントエンド開発の教科書」4章  
+## 「Vue3 フロントエンド開発の教科書」5章  
 ## 5.1 双方向データバインディング
 ```ts
 vueChapter5.1/directive-model/directive-model/src/App.vue
