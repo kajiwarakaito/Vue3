@@ -16,6 +16,8 @@ vueChapter5.1/directive-model/directive-model/src/App.vue
   </section>
 </template>
 ```
+入力した内容を反映し、テキストとして下に表示するプログラム
+<br>
 
 ```ts
 vueChapter5.1/directive-oneway/directive-oneway/src/App.vue
