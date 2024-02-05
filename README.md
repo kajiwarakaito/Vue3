@@ -129,8 +129,78 @@ vueChapter6.2/a/a/src/App.vue
 ```
 <br>
 
+### 6.2.1 ループのディレクティブであるv-for
+```ts
+vueChapter6.2/a/a/src/App.vue
+
+```
+<br>
+
+### 6.2.1 ループのディレクティブであるv-for
+```ts
+vueChapter6.2/a/a/src/App.vue
+
+```
+<br>
+
+### 6.2.1 ループのディレクティブであるv-for
+```ts
+vueChapter6.2/a/a/src/App.vue
+
+```
+<br>
+
+### 6.2.1 ループのディレクティブであるv-for
+```ts
+vueChapter6.2/a/a/src/App.vue
+
+```
+<br>
+
+### 6.2.1 ループのディレクティブであるv-for
+```ts
+vueChapter6.2/a/a/src/App.vue
+
+```
+<br>
+
+### 6.2.1 ループのディレクティブであるv-for
+```ts
+vueChapter6.2/a/a/src/App.vue
+
+```
+<br>
+
 ## 6.3 リスト操作
-### 6.2.1 ループ対象データの絞り込み
+### 6.3.1 ループ対象データの絞り込み
+```ts
+vueChapter6.3/a/a/src/App.vue
+
+```
+<br>
+
+### 6.3.1 ループ対象データの絞り込み
+```ts
+vueChapter6.3/a/a/src/App.vue
+
+```
+<br>
+
+### 6.3.1 ループ対象データの絞り込み
+```ts
+vueChapter6.3/a/a/src/App.vue
+
+```
+<br>
+
+### 6.3.1 ループ対象データの絞り込み
+```ts
+vueChapter6.3/a/a/src/App.vue
+
+```
+<br>
+
+### 6.3.1 ループ対象データの絞り込み
 ```ts
 vueChapter6.3/a/a/src/App.vue
 
