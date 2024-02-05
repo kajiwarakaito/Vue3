@@ -17,7 +17,7 @@ vueChapter5.1/directive-model/directive-model/src/App.vue
   </section>
 </template>
 ```
-テキストエリアに入力した内容を反映し、テキストとして下に表示するプログラム  
+デフォルトではテキストエリアのinput、その下に「双方向」というテキストが表示されており、テキストエリアに入力した内容を反映し、テキストとして下に表示するプログラム  
 <br>
 
 ```ts
@@ -45,6 +45,8 @@ vueChapter5.1/directive-oneway/directive-oneway/src/App.vue
   </section>
 </template>
 ```
+テキストエリアのinputが二つ、上のinputにデフォルトで「しんちゃん」と表示されており、下のinputには何もない。inputの下には「ななし」というテキストがあり、下のinputに文字を入力することで反映され、データの受け渡しがされる
+<br>
 
 ```ts
 ```
