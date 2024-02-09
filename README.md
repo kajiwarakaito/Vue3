@@ -1,526 +1,208 @@
-## 「Vue3 フロントエンド開発の教科書」8章  
-## 8.1 子コンポーネントの利用
-### 8.1.2 コンポーネントの作り方
+## 「Vue3 フロントエンド開発の教科書」9章  
+## 9.1 子コンポーネントをカスタマイズするSlot
+### 9.1.2 Slotの基本的な記述法
 ```ts
-vueChapter8.1/components-basics/src/components/OneSection.vue
+vueChapter9.1/slot-basic/src/components/OneSection.vue
+
+<script setup lang="ts">
+  interface Props {
+    name: string;
+  }
+  defineProps<Props>();
+</script>
 
 <template>
   <section class="box">
-    <h4>一つのコンポーネント</h4>
-    <p>
-      コンポーネントとは、
-    </p>
+    <h1>{{ name }}さんの状況</h1>
+    <slot />
   </section>
 </template>
 
-<style>
+<style scoped>
   .box {
-    border: green 1px dashed;
+    border: green 1px solid;
     margin: 10px;
   }
 </style>
 ```
 <br>
 
-### 8.1.3 子コンポーネントの利用方法
 ```ts
-vueChapter8.1/components-basics/src/App.vue
+vueChapter9.1/slot-basic/src/App.vue
 
 <script setup lang="ts">
+  import { ref } from 'vue';
+  import OneSection from './components/OneSection.vue';
+
+  const taro = ref("田中太郎");
+</script>
+
+<template>
+  <section>
+    <h2>Slotの利用</h2>
+    <OneSection v-bind:name="taro">
+      <p>連絡がつきません</p>
+    </OneSection>
+  </section>
+</template>
+```
+<br>
+
+### 9.1.3 Slotのフォールバックコンテンツ
+```ts
+vueChapter9.1/slot-fallback/src/components/OneSection.vue
+
+<script setup lang="ts">
+  interface Props {
+    name: string;
+  }
+  defineProps<Props>();
+</script>
+
+<template>
+  <section class="box">
+    <h1>{{ name }}さんの状況</h1>
+    <slot>
+      <p>問題ありません</p>
+    </slot>
+  </section>
+</template>
+
+<style scoped>
+  .box {
+    border: green 1px solid;
+    margin: 10px;
+  }
+</style>
+```
+<br>
+
+```ts
+vueChapter9.1/slot-fallback/src/App.vue
+
+<script setup lang="ts">
+  import { ref } from 'vue';
   import OnSection from "./components/OneSection.vue";
+
+  const taro = ref("田中太郎");
+  const jiro = ref("鈴木二郎");
 </script>
 
 <template>
-  <h1>コンポーネント基礎</h1>
   <section>
-    <h2>コンポーネント1個</h2>
-    <OnSection />
+    <h2>Slotの利用</h2>
+    <OnSection v-bind:name="taro">
+      <p>連絡がつきません</p>
+    </OnSection>
+    <OnSection v-bind:name="jiro"/>
   </section>
-  <section>
-    <h2>コンポーネントが複数</h2>
-    <OnSection />
-    <OnSection />
-    <OnSection />
+</template>
+```
+<br>
+
+### 9.1.4
+```ts
+vueChapter9.1/slot-datascope/src/components/OneSection.vue
+
+<script setup lang="ts">
+  interface Props {
+    name: string;
+  }
+  defineProps<Props>();
+</script>
+
+<template>
+  <section class="box">
+    <h1>{{ name }}さんの状況</h1>
+    <slot>
+      <p>{{name}}さんは問題ありません</p>
+    </slot>
   </section>
 </template>
 
-<style>
-  section {
-    border: blue 1px solid;
+<style scoped>
+  .box {
+    border: green 1px solid;
     margin: 10px;
   }
 </style>
 ```
 <br>
 
-## 8.2コンポーネントの独立性とCSSの扱い
-### 8.2.1 処理が含まれたコンポーネントを埋め込む
 ```ts
-vueChapter8.2/components-vmodel/src/components/WithModel.vue
+vueChapter9.1/slot-datascope/src/App.vue
 
 <script setup lang="ts">
   import { ref } from 'vue';
-  
-  const name = ref("名無し");
+  import OnSection from "./components/OneSection.vue";
+
+  const taro = ref("田中太郎");
+  const jiro = ref("鈴木二郎");
 </script>
 
 <template>
   <section>
-    <p>{{ name }}さんですね！</p>
-    <input type="text" v-model="name">
-  </section>
-</template>
-
-<style scoped>
-  section {
-    border: orange 1px dashed;
-    margin: 10px;
-    padding: 10px;
-  }
-</style>
-```
-<br>
-
-```ts
-vueChapter8.2/components-vmodel/src/App.vue
-
-<script setup lang="ts">
-  import WithModel from "./components/WithModel.vue";
-</script>
-
-<template>
-  <h1>コンポーネントの独立性</h1>
-  <section>
-    <h2>v-modelを含むコンポーネント</h2>
-    <WithModel />
-    <WithModel />
-  </section>
-</template>
-
-<style>
-  section {
-    border: blue 1px solid;
-    margin: 10px;
-  }
-</style>
-```
-<br>
-
-## 8.3 親から子へのコンポーネント間通信
-### 8.3.1 親からデータをもらうProps
-```ts
-vueChapter8.3/components-props-basics/src/components/OneInfo.vue
-
-<script setup lang="ts">
-  interface Props {
-    title: string;
-    content: string;
-    }
-  defineProps<Props>();
-</script>
-
-<template>
-  <section class="box">
-    <h4>{{ title }}</h4>
-    <p>{{ content }}</p>
-  </section>
-</template>
-
-<style scoped>
-  .box {
-    border: green 1px dashed;
-    margin: 10px;
-  }
-</style>
-```
-<br>
-
-```ts
-vueChapter8.3/components-props-basics/src/App.vue
-
-<script setup lang="ts">
-  import OneInfo from "./components/OneInfo.vue";
-</script>
-
-<template>
-  <h1>Props基礎</h1>
-  <section>
-    <h2>属性に直接記述</h2>
-    <OneInfo
-      title="Propsの利用"
-      content="子コンポーネントにデータを渡すにはPropsを利用する" />
-  </section>
-</template>
-
-<style scoped>
-  section {
-    border: blue 1px solid;
-    margin: 10px;
-  }
-</style>
-```
-<br>
-
-### 8.3.3 親のテンプレート変数をPropsに渡す方法
-```ts
-vueChapter8.3/components-props-bind/src/components/OneInfo.vue
-
-<script setup lang="ts">
-  interface Props {
-    title: string;
-    content: number;
-    }
-  defineProps<Props>();
-</script>
-
-<template>
-  <section class="box">
-    <h4>{{ title }}</h4>
-    <p>{{ content }}</p>
-  </section>
-</template>
-
-<style scoped>
-  .box {
-    border: green 1px dashed;
-    margin: 10px;
-  }
-</style>
-```
-<br>
-
-```ts
-vueChapter8.3/components-props-bind/src/App.vue
-
-<script setup lang="ts">
-  import { ref } from "vue";
-  import OneInfo from "./components/OneInfo.vue";
-
-  const propsTitle = ref("発生した乱数");
-  const rand = Math.round(Math.random() * 100);
-  const propsContent = ref(rand);
-</script>
-
-<template>
-  <h1>Props基礎</h1>
-  <section>
-    <h2>テンプレート変数を利用</h2>
-    <OneInfo 
-      v-bind:title="propsTitle"
-      v-bind:content="propsContent"/>
+    <h2>Slotの利用</h2>
+    <OnSection v-bind:name="taro">
+      <p>{{ taro }}さんは連絡がつきません</p>
+    </OnSection>
+    <OnSection v-bind:name="jiro"/>
   </section>
 </template>
 ```
 <br>
 
-
-### 8.3.4 v-forとPropsとの組み合わせ
+### 9.1.5
 ```ts
-vueChapter8.3/components-props-vfor/src/App.vue
-
-<script setup lang="ts">
-  import { ref } from 'vue';
-  import OneInfo from "./components/OneInfo.vue";
-
-  const weatherListInit = new Map<number, Weather>();
-  weatherListInit.set(1, {id: 1, title: "今日の天気", content: "今日は一日中、晴れでしょう"});
-  weatherListInit.set(2, {id: 2, title: "明日の天気", content: "明日は一日中、雨でしょう"});
-  weatherListInit.set(3, {id: 3, title: "明後日の天気", content: "明後日は一日中、雪でしょう"});
-  const weatherList = ref(weatherListInit);
-
-  interface Weather {
-    id: number;
-    title: string;
-    content: string;
-  }
-</script>
-
-<template>
-  <h1>Props基礎</h1>
-  <section>
-    <h2>ループでコンポーネントを生成</h2>
-    <OneInfo 
-      v-for="[id, weather] in weatherList"
-      v-bind:key="id"
-      v-bind:title="weather.title"
-      v-bind:content="weather.content"/>
-  </section>
-</template>
-```
-<br>
-
-## 8.4 Propsの応用
-### 8.4.1 スクリプトブロックでのPropsの値の利用
-```ts
-vueChapter8.4/components-props-indepth/src/components/OneMember.vue
-
-<script setup lang="ts">
-  import { ref, computed } from 'vue';
-
-  interface Props {
-    id: number;
-    name: string;
-    email: string;
-    points: number;
-    note?: string;
-    }
-  const props = defineProps<Props>();
-  
-  const localPoints = ref(props.points);
-  const localNote = computed(
-    (): string => {
-      let localNote = props.note;
-      if(localNote == undefined) {
-        localNote = "--";
-        }
-        return localNote;
-      }
-    );
-  const pointUp = (): void => {
-    localPoints.value++;
-    }
-</script>
-
-<template>
-  <section class="box">
-    <h4>{{ name }}さんの情報</h4>
-    <dl>
-      <dt>ID</dt>
-      <dd>{{ id }}</dd>
-      <dt>メールアドレス</dt>
-      <dd>{{ email }}</dd>
-      <dt>保有ポイント</dt>
-      <dd>{{ localPoints }}</dd>
-      <dt>備考</dt>
-      <dd>{{ localNote }}</dd>
-    </dl>
-    <button v-on:click="pointUp">ポイント加算</button>
-  </section>
-</template>
-
-<style scoped>
-  .box {
-    border: green 1px solid;
-    margin: 10px;
-  }
-</style>
-```
-<br>
-
-```ts
-vueChapter8.4/components-props-indepth/src/App.vue
-
-<script setup lang="ts">
-  import { ref, computed } from 'vue';
-  import OneMember from './components/OneMember.vue';
-
-  const memberListInit = new Map<number, Member>();
-  memberListInit.set(33456, {id: 33456, name: "田中太郎", email: "bow@example.com", points: 35,
-  note: "初回入会特典あり"});
-  memberListInit.set(47783, {id: 47783, name: "鈴木二郎", email: "mue@example.com", points: 53});
-  const memberList = ref(memberListInit);
-
-  const totalPoints = computed(
-    (): number => {
-      let total = 0;
-      for(const member of memberList.value.values()) {
-        total += member.points;
-        }
-        return total;
-      }
-    );
-  
-  interface Member {
-    id: number;
-    name: string;
-    email: string;
-    points: number;
-    note?: string;
-    }
-</script>
-
-<template>
-  <section>
-    <h1>会員リスト</h1>
-    <p>全会員の保有ポイントの合計：{{ totalPoints }}</p>
-    <OneMember
-      v-for="[id, member] in memberList"
-      v-bind:key="id"
-      v-bind:id="id"
-      v-bind:name="member.name"
-      v-bind:email="member.email"
-      v-bind:points="member.points"
-      v-bind:note="member.note"/>
-  </section>
-</template>
-```
-<br>
-
-### 8.4.3 Propsのデフォルト値
-```ts
-vueChapter8.4/components-props-indepth2/src/components/OneMember.vue
-
-<script setup lang="ts">
-  import { ref, computed } from 'vue';
-
-  interface Props {
-    id: number;
-    name: string;
-    email: string;
-    points: number;
-    note?: string;
-    }
-  const props = withDefaults(
-    defineProps<Props>(),
-    {note: "--"}
-    );
-  
-  const localPoints = ref(props.points);
-
-  const pointUp = (): void => {
-    localPoints.value++;
-    }
-</script>
-
-<template>
-  <section class="box">
-    <h4>{{ name }}さんの情報</h4>
-    <dl>
-      <dt>ID</dt>
-      <dd>{{ id }}</dd>
-      <dt>メールアドレス</dt>
-      <dd>{{ email }}</dd>
-      <dt>保有ポイント</dt>
-      <dd>{{ localPoints }}</dd>
-      <dt>備考</dt>
-      <dd>{{ note }}</dd>
-    </dl>
-    <button v-on:click="pointUp">ポイント加算</button>
-  </section>
-</template>
-
-<style scoped>
-  .box {
-    border: green 1px solid;
-    margin: 10px;
-  }
-</style>
-```
-<br>
-
-## 8.5 子から親へのコンポーネント間通信
-### 8.5.1 子から親への通信はイベント処理
-```ts
-vueChapter8.5/components-emit-basics/src/components/OneSection.vue
-
-<script setup lang="ts">
-  interface Props {
-    rand: number;
-    }
-
-  interface Emits {
-    (event: "createNewRand"): void;
-    }
-  
-  defineProps<Props>();
-  const emit = defineEmits<Emits>();
-
-  const onNewRandButtonClick = (): void => {
-    emit("createNewRand");
-    }
-</script>
-
-<template>
-  <section class="box">
-    <p>子コンポーネントで乱数で表示：{{ rand }}</p>
-    <button v-on:click="onNewRandButtonClick">新たな乱数を発生</button>
-  </section>
-</template>
-
-<style scoped>
-  .box {
-    border: green 1px solid;
-    margin: 10px;
-    }
-</style>
-```
-<br>
-
-```ts
-vueChapter8.5/components-emit-basics/src/App.vue
+vueChapter9.2/slot-dynamic/src/App.vue
 
 <script setup lang="ts">
   import { ref } from 'vue';
   import OneSection from "./components/OneSection.vue";
 
-  const randInit = Math.round(Math.random() * 10);
-  const rand = ref(randInit);
-  const onCreateNewRand = (): void => {
-    rand.value = Math.round(Math.random() * 10);
-    }
+  const taroProblemsInit: string[] = ["電話が通じません", "留守です"];
+  const taro = ref("田中太郎");
+  const taroProblems = ref(taroProblemsInit);
+  const jiro = ref("鈴木二郎");
 </script>
 
 <template>
   <section>
-    <p>親コンポーネントで乱数を表示：{{ rand }}</p>
-    <OneSection
-      v-bind:rand="rand"
-      v-on:createNewRand="onCreateNewRand"/>
+    <OneSection v-bind:name="taro">
+      <ul>
+        <li v-for="problem in taroProblems" v-bind:key="problem">
+          {{ problem }}
+        </li>
+      </ul>
+    </OneSection>
+    <OneSection v-bind:name="jiro" />
   </section>
 </template>
 ```
 <br>
 
-### 8.5.2 親コンポーネントにデータを渡す方法
+## 9.2 複数のSlotを実現する名前付きSlot
+### 9.2.2 名前付きSlot
 ```ts
-vueChapter8.5/components-emit-value/src/components/OneMember.vue
+vueChapter9.2/slot-named/src/components/OneSection.vue
 
 <script setup lang="ts">
-  import { computed } from 'vue';
-
   interface Props {
-    id: number;
     name: string;
-    email: string;
-    points: number;
-    note?: string;
-    }
-
-    interface Emits {
-      (event: "incrementPoint", id: number): void;
-      }
-
-  const props = defineProps<Props>();
-  const emit = defineEmits<Emits>();
-  
-  const localNote = computed(
-    (): string => {
-      let localNote = props.note;
-      if(localNote == undefined) {
-        localNote = "--";
-        }
-        return localNote;
-      }
-    );
-  const pointUp = (): void => {
-    emit("incrementPoint", props.id);
-    }
+  }
+  defineProps<Props>();
 </script>
 
 <template>
   <section class="box">
-    <h4>{{ name }}さんの情報</h4>
-    <dl>
-      <dt>ID</dt>
-      <dd>{{ id }}</dd>
-      <dt>メールアドレス</dt>
-      <dd>{{ email }}</dd>
-      <dt>保有ポイント</dt>
-      <dd>{{ points }}</dd>
-      <dt>備考</dt>
-      <dd>{{ localNote }}</dd>
-    </dl>
-    <button v-on:click="pointUp">ポイント加算</button>
+    <h1>{{ name }}さんの状況</h1>
+    <slot>
+      <p>問題ありません</p>
+    </slot>
+    <h4>詳細内容</h4>
+    <slot name="detail">
+      <p>特にありません</p>
+    </slot>
   </section>
 </template>
 
@@ -529,307 +211,191 @@ vueChapter8.5/components-emit-value/src/components/OneMember.vue
     border: green 1px solid;
     margin: 10px;
   }
-</style>
-```
-<br>
-
-```ts
-vueChapter8.5/components-emit-value/src/App.vue
-
-<script setup lang="ts">
-  import { ref, computed } from 'vue';
-  import OneMember from './components/OneMember.vue';
-
-  const memberListInit = new Map<number, Member>();
-  memberListInit.set(33456, {id: 33456, name: "田中太郎", email: "bow@example.com", points: 35,
-  note: "初回入会特典あり"});
-  memberListInit.set(47783, {id: 47783, name: "鈴木二郎", email: "mue@example.com", points: 53});
-  const memberList = ref(memberListInit);
-
-  const totalPoints = computed(
-    (): number => {
-      let total = 0;
-      for(const member of memberList.value.values()) {
-        total += member.points;
-        }
-        return total;
-      }
-    );
-  const onIncrementPoint = (id: number): void => {
-    const member = memberList.value.get(id);
-    if(member != undefined) {
-      member.points++;
-      }
-    }
-  
-  interface Member {
-    id: number;
-    name: string;
-    email: string;
-    points: number;
-    note?: string;
-    }
-</script>
-
-<template>
-  <section>
-    <h1>会員リスト</h1>
-    <p>全会員の保有ポイントの合計: {{ totalPoints }}</p>
-    <OneMember
-      v-for="[id, member] in memberList"
-      v-bind:key="id"
-      v-bind:id="id"
-      v-bind:name="member.name"
-      v-bind:email="member.email"
-      v-bind:points="member.points"
-      v-bind:note="member.note"
-      v-on:incrementPoint="onIncrementPoint"/>
-  </section>
-</template>
-```
-<br>
-
-### 8.5.3 v-modelによる子から親への通信
-```ts
-vueChapter8.5/components-emit-model/src/components/OneMember.vue
-
-<script setup lang="ts">
-  import { computed } from 'vue';
-
-  interface Props {
-    id: number;
-    name: string;
-    email: string;
-    points: number;
-    note?: string;
-    }
-
-    interface Emits {
-      (event: "update:points", points: number): void;
-      }
-
-  const props = defineProps<Props>();
-  const emit = defineEmits<Emits>();
-  
-  const localNote = computed(
-    (): string => {
-      let localNote = props.note;
-      if(localNote == undefined) {
-        localNote = "--";
-        }
-        return localNote;
-      }
-    );
-
-  const onInput = (event: Event): void => {
-    const element = event.target as HTMLInputElement;
-    const inputPoints = Number(element.value);
-    emit("update:points", inputPoints);
-    }
-</script>
-
-<template>
-  <section class="box">
-    <h4>{{ name }}さんの情報</h4>
-    <dl>
-      <dt>ID</dt>
-      <dd>{{ id }}</dd>
-      <dt>メールアドレス</dt>
-      <dd>{{ email }}</dd>
-      <dt>保有ポイント</dt>
-      <dd>
-        <input type="number" v-bind:value="points" v-on:input="onInput">
-      </dd>
-      <dt>備考</dt>
-      <dd>{{ localNote }}</dd>
-    </dl>
-  </section>
-</template>
-
-<style scoped>
-  .box {
-    border: green 1px solid;
-    margin: 10px;
+  h1 {
+    font-weight: bold;
   }
 </style>
 ```
 <br>
 
 ```ts
-vueChapter8.5/components-emit-model/src/App.vue
+vueChapter9.2/slot-named/src/App.vue
 
 <script setup lang="ts">
-  import { ref, computed } from 'vue';
-  import OneMember from './components/OneMember.vue';
+  import { ref } from 'vue';
+  import OneSection from "./components/OneSection.vue";
 
-  const memberListInit = new Map<number, Member>();
-  memberListInit.set(33456, {id: 33456, name: "田中太郎", email: "bow@example.com", points: 35,
-  note: "初回入会特典あり"});
-  memberListInit.set(47783, {id: 47783, name: "鈴木二郎", email: "mue@example.com", points: 53});
-  const memberList = ref(memberListInit);
-
-  const totalPoints = computed(
-    (): number => {
-      let total = 0;
-      for(const member of memberList.value.values()) {
-        total += member.points;
-        }
-        return total;
-      }
-    );
-  
-  interface Member {
-    id: number;
-    name: string;
-    email: string;
-    points: number;
-    note?: string;
-    }
+  const taroProblemsInit: string[] = ["電話が通じません", "留守です"];
+  const taro = ref("田中太郎");
+  const taroProblems = ref(taroProblemsInit);
+  const jiro = ref("鈴木二郎");
 </script>
 
 <template>
   <section>
-    <h1>会員リスト</h1>
-    <p>全会員の保有ポイントの合計：{{ totalPoints }}</p>
-    <OneMember
-      v-for="[id, member] in memberList"
-      v-bind:key="id"
-      v-bind:id="id"
-      v-bind:name="member.name"
-      v-bind:email="member.email"
-      v-model:points="member.points"
-      v-bind:note="member.note"/>
+    <OneSection v-bind:name="taro">
+      <template v-slot:default>
+        <p>問題発生</p>
+      </template>
+    <template v-slot:detail>
+      <ul>
+        <li v-for="problem in taroProblems" v-bind:key="problem">
+          {{ problem }}
+        </li>
+      </ul>
+    </template>
+    </OneSection>
+    <OneSection v-bind:name="jiro" />
   </section>
 </template>
 ```
 <br>
 
-## 8.6 ProvideとInject
-### 8.6.2 サンプルプロジェクトの作成
+## 9.3 データの受け渡しを逆転させるスコープ付きSlot
+### 9.3.1 スコープ付きSlotとは
 ```ts
-vueChapter8.6/components-provinje/src/interfaces.ts
-
-export interface Member {
-    id: number;
-    name: string;
-    email: string;
-    points: number;
-    note?: string;
-}
-```
-<bue>
-
-```ts
-vueChapter8.6/components-provinje/src/components/OneMember.vue
+vueChapter9.3/slot-scoped/src/components/OneSection.vue
 
 <script setup lang="ts">
-  import { computed, inject } from 'vue';
-  import type { Member } from '../interfaces';
+  import { reactive } from 'vue';
 
-  interface Props {
-    id: number;
-    }
-  const props = defineProps<Props>();
-  const memberList = inject("memberList") as Map<number, Member>;
-  const member = computed(
-    (): Member => {
-      return memberList.get(props.id) as Member;
-      }
-    );
-  const localNote = computed(
-    (): string => {
-      let localNote = member.value.note;
-      if(localNote == undefined) {
-        localNote = "--";
-        }
-        return localNote;
-      }
-    );
+  const memberInfo = reactive({
+    name: "田中太郎",
+    state: "問題ありません"
+  });
 </script>
 
 <template>
-  <section class="box">
-    <h4>{{ member.name }}さんの情報</h4>
-    <dl>
-      <dt>ID</dt>
-      <dd>{{ id }}</dd>
-      <dt>メールアドレス</dt>
-      <dd>{{ member.email }}</dd>
-      <dt>保有ポイント</dt>
-      <dd>
-        <input type="number" v-model.number="member.points">
-      </dd>
-      <dt>備考</dt>
-      <dd>{{ localNote }}</dd>
-    </dl>
+  <section>
+    <slot v-bind:memberInfo="memberInfo">
+      <h1>{{ memberInfo.name }}さんの状況</h1>
+      <p>{{ memberInfo.state }}</p>
+    </slot>
   </section>
 </template>
-
-<style scoped>
-  .box {
-    border: green 1px solid;
-    margin: 10px;
-  }
-</style>
 ```
-<bue>
+<br>
 
 ```ts
-vueChapter8.6/components-provinje/src/components/BaseSection.vue
+vueChapter9.3/slot-scoped/src/App.vue
 
 <script setup lang="ts">
-    import { computed, inject } from 'vue';
-    import OneMember from './OneMember.vue';
-    import type { Member } from '../interfaces';
-
-    const memberList = inject("memberList") as Map<number, Member>;
-    const totalPoints = computed(
-        (): number => {
-            let total = 0;
-            for(const member of memberList.values()) {
-                total += member.points;
-                }
-                return total;
-            }
-        );
+  import OneSection from "./components/OneSection.vue";
 </script>
 
 <template>
-    <section>
-        <h1>会員リスト</h1>
-        <p>全会員の保有ポイントの合計：{{ totalPoints }}</p>
-        <OneMember
-            v-for="id in memberList.keys()"
-            v-bind:key="id"
-            v-bind:id="id"/>
-    </section>
+  <section>
+    <OneSection>
+      <template v-slot:default="slotProps">
+      <dl>
+        <dt>名前</dt>
+        <dd>{{ slotProps.memberInfo.name }}</dd>
+        <dt>状況</dt>
+        <dd>{{ slotProps.memberInfo.state }}</dd>
+      </dl>
+    </template>
+    </OneSection>
+  </section>
 </template>
+```
+<br>
 
-<style scoped>
-    section {
-        border: orange 1px dashed;
-        margin: 10px;
+## 9.4 動的コンポーネント
+### 9.4.1 動的コンポーネントとは
+```ts
+vueChapter9.4/components-dynamic/src/components/Input.vue
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+  const inputNameModel = ref("田中太郎");
+</script>
+
+<template>
+  <input type="text" v-model="inputNameModel">
+  <p>{{ inputNameModel }}</p>
+</template>
+```
+<br>
+
+```ts
+vueChapter9.4/components-dynamic/src/components/Radio.vue
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+
+  const memberType = ref(1);
+</script>
+
+<template>
+  <label>
+    <input type="radio" name="memberType" value="1" v-model="memberType">
+    通常会員
+  </label>
+  <label>
+    <input type="radio" name="memberType" value="2" v-model="memberType">
+    特別会員
+  </label>
+  <label>
+    <input type="radio" name="memberType" value="3" v-model="memberType">
+    優良会員
+  </label>
+  <br>
+  <p>選択されたラジオボタン：{{ memberType }}</p>
+</template>
+```
+<br>
+
+```ts
+vueChapter9.4/components-dynamic/src/components/Select.vue
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+
+  const memberTypeSelect = ref(1);
+</script>
+
+<template>
+  <select v-model="memberTypeSelect">
+    <option value="1">通常会員</option>
+    <option value="2">特別会員</option>
+    <option value="3">優良会員</option>
+  </select>
+  <br>
+  <p>選択されたリスト：{{ memberTypeSelect }}</p>
+</template>
+```
+<br>
+
+```ts
+vueChapter9.4/components-dynamic/src/App.vue
+
+<script setup lang="ts">
+  import { ref } from 'vue';
+  import Input from "./components/Input.vue";
+  import Radio from "./components/Radio.vue";
+  import Select from "./components/Select.vue";
+
+  const currentComp = ref(Input);
+  const currentCompName = ref("Input");
+  const compList = [Input, Radio, Select];
+  const compNameList: string[] = ["Input", "Radio", "Select"];
+  let currentCompIndex = 0;
+  const switchComp = (): void => {
+    currentCompIndex++;
+    if(currentCompIndex >= 3) {
+      currentCompIndex = 0;
     }
-</style>
-```
-<bue>
-
-```ts
-vueChapter8.6/components-provinje/src/App.vue
-
-<script setup lang="ts">
-  import { reactive, provide } from 'vue';
-  import BaseSection from './components/BaseSection.vue';
-  import type { Member } from './interfaces';
-
-  const memberList = new Map<number, Member>();
-  memberList.set(33456, {id: 33456, name: "田中太郎", email: "bow@example.com", points: 35,
-  note: "初回入会特典あり"});
-  memberList.set(47783, {id: 47783, name: "鈴木二郎", email: "mue@example.com", points: 53});
-  provide("memberList", reactive(memberList));
+    currentComp.value = compList[currentCompIndex];
+    currentCompName.value = compNameList[currentCompIndex];
+  }
 </script>
 
 <template>
-  <BaseSection />
+  <p>コンポーネント名：{{ currentCompName }}</p>
+  <KeepAlive>
+    <component v-bind:is="currentComp"/>
+  </KeepAlive>
+  <button v-on:click="switchComp">切り替え</button>
 </template>
 ```
+<br>

@@ -8,7 +8,9 @@
 <template>
   <section class="box">
     <h1>{{ name }}さんの状況</h1>
-    <slot />
+    <slot>
+      <p>{{name}}さんは問題ありません</p>
+    </slot>
   </section>
 </template>
 
