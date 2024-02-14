@@ -24,7 +24,7 @@ vueChapter11.1//src/App.vue
 ## 11.2 引数を使う一歩進んだPiniaの利用方法
 ### 11.2.2 Provideの代わりの初期リストの用意
 ```ts
-vueChapter11.2//src/stores/member.ts
+vueChapter11.2//src/stores/members.ts
 
 ```
 <br>
@@ -35,60 +35,56 @@ vueChapter11.2//src/App.vue
 ```
 <br>
 
-### 11.2.3 Provideの代わりの初期リストの用意
+### 11.2.3 Injectの代わりにリストデータをストアから取得
 ```ts
-vueChapter11.2//src/stores/member.ts
-
-```
-<br>
-
-```ts
-vueChapter11.2//src/App.vue
+vueChapter11.2//src/views/member/MemberList.ts
 
 ```
 <br>
 
 ### 11.2.4 Provideの代わりの初期リストの用意
 ```ts
-vueChapter11.2//src/stores/member.ts
+vueChapter11.2//src/views/member/MemberDetail.vue
+
+```
+<br>
+
+### 11.2.5 引数付きのゲッタの定義
+```ts
+vueChapter11.2//src/stores/members.ts
+
+```
+<br>
+
+### 11.2.6 引数付きのアクションの利用
+```ts
+vueChapter11.2//src/views/member/MemberAdd
 
 ```
 <br>
 
 ```ts
-vueChapter11.2//src/App.vue
+vueChapter11.2//src/stores/members.ts
 
 ```
 <br>
 
-### 11.2.5 Provideの代わりの初期リストの用意
+## 11.3 アクションの応用
+### 11.3.1 外部連携もアクションの役割
 ```ts
-vueChapter11.2//src/stores/member.ts
+vueChapter11.3//src/App.vue
 
 ```
 <br>
 
+### 11.3.2 セッションストレージからデータの取得
 ```ts
-vueChapter11.2//src/App.vue
+vueChapter11.3//src/stores/members.ts
 
 ```
 <br>
 
-### 11.2.6 Provideの代わりの初期リストの用意
-```ts
-vueChapter11.2//src/stores/member.ts
-
-```
-<br>
-
-```ts
-vueChapter11.2//src/App.vue
-
-```
-<br>
-
-## 11.3
-### 11.3.1
+### 11.3.4 MemberList.vueの変更
 ```ts
 vueChapter11.3//src/views/member/MemberList.vue
 
@@ -96,6 +92,20 @@ vueChapter11.3//src/views/member/MemberList.vue
 <br>
 
 ```ts
-vueChapter11.3//src/views/member/MemberDetail.vue
+vueChapter11.3//src/stores/members.ts
 
 ```
+<br>
+
+### 11.3.5 Mapオブジェクトをセッションストレージに格納する方法
+```ts
+vueChapter11.3//src/stores/members.ts
+
+```
+<br>
+
+```ts
+vueChapter11.3//src/views/member/MemberAdd.vue
+
+```
+<br>
