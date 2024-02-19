@@ -730,9 +730,3 @@ vueChapter12.3/async-web/src/views/WeatherInfo.vue
     </p>
 </template>
 ```
-<br>
-
-```ts
-vueChapter12.3/async-web/src/App.vue
-
-```
